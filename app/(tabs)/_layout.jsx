@@ -6,9 +6,11 @@ import { icons } from "../../constants";
 //import { Loader } from "../../components";
 //import { useGlobalContext } from "../../context/GlobalProvider";
 
+
+//табы + иконки в табам
 const TabIcon = ({ icon, color, name, focused }) => {
-  return (
-    <View className="flex items-center justify-center gap-2 pt-5">
+  return (          //flex                          //pt-5
+    <View className="items-center justify-center gap-2 "> 
       <Image
         source={icon}
         resizeMode="contain"
@@ -25,7 +27,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
   );
 };
 
-const TabLayout = () => {
+const TabsLayout = () => {
   //const { loading, isLogged } = useGlobalContext();
 
   //if (!loading && !isLogged) return <Redirect href="/sign-in" />;
@@ -109,4 +111,4 @@ const TabLayout = () => {
   );
 };
 
-export default TabLayout;
+export default TabsLayout;
