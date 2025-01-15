@@ -9,8 +9,8 @@ import { icons } from "../../constants";
 
 //табы + иконки в табам
 const TabIcon = ({ icon, color, name, focused }) => {
-  return (          //flex                          //pt-5
-    <View className="items-center justify-center gap-2 "> 
+  return (          //                          //
+    <View className="items-center justify-center gap-2 pt-5 "> 
       <Image
         source={icon}
         resizeMode="contain"

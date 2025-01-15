@@ -1,8 +1,8 @@
 //регистрация
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 import { images } from "../../constants";
 import FormField from "../../components/FormField";
@@ -19,8 +19,21 @@ const SignUp = () => {
     password: "",
   });
 
-  const submit = () => {
-    createUser(); // из lib/appwrite
+  const submit = async () => {
+    if (!form.username || !form.email || !form.password) { // если чего то нету в форме
+      Alert.alert('Error', 'Please fill all fields')
+    }
+    setIsSubmitting(true);
+
+    try {
+      const result = await createUser(form.email, form.password, form.username); // из lib/appwrite  
+      // потом  в глоб стейт   
+      router.replace('/home');
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    } finally {
+      setIsSubmitting(false)
+    }
   };
 
   return (
