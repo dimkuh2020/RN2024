@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { images } from "../../constants"
 import SearchInput from '../../components/SearchInput'
+import Trending from '../../components/Trending'
+import EmptyState from '../../components/EmptyState'
 
 const Home = () => {
   return (
@@ -40,9 +42,15 @@ const Home = () => {
                 Latest Videos
               </Text>
 
-              <Trending posts={latestPosts ?? []} />
+              <Trending posts={[{id: 1}, {id: 2}, {id: 3}] ?? []} /*если не существует то пустой массив*/ />
             </View>
           </View>
+        )}
+        ListEmptyComponent={() => (
+          <EmptyState
+            title="No videos found"
+            subtitle="No videos created yet"          
+          />
         )}
         />     
     </SafeAreaView>
