@@ -1,17 +1,32 @@
-import { View, Text, FlatList, Image } from 'react-native'
-import React from 'react'
+import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native'
+import React, { useState, useEffect} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { images } from "../../constants"
 import SearchInput from '../../components/SearchInput'
 import Trending from '../../components/Trending'
 import EmptyState from '../../components/EmptyState'
+import { getAllPosts } from '../../lib/appwrite'
+import useAppwrite from '../../lib/useAppwrite'
 
 const Home = () => {
+
+ const {data: posts} = useAppwrite(getAllPosts); // вытащили все посты  
+  console.log(posts);
+
+  const [refreshing, setRefreshing] = useState(false)
+  
+  const onRefresh = () => {
+    setRefreshing(true)
+    // если будут новые видео  2:38:00
+    setRefreshing(false)
+  } 
+
   return (
-    <SafeAreaView className="bg-primary">
+    <SafeAreaView className="bg-primary h-full">
       <FlatList
         data={[{id: 1}, {id: 2}, {id: 3}]}
+        //data={[]}
         keyExtractor={(item) => item.$id}
         renderItem={({item}) => (
           <Text className="text-3xl text-white">{item.id}</Text>
@@ -42,16 +57,20 @@ const Home = () => {
                 Latest Videos
               </Text>
 
-              <Trending posts={[{id: 1}, {id: 2}, {id: 3}] ?? []} /*если не существует то пустой массив*/ />
+              <Trending 
+                posts={[{id: 1}, {id: 2}, {id: 3}] ?? []} /*если не существует то пустой массив */                
+              />
+              
             </View>
           </View>
         )}
         ListEmptyComponent={() => (
           <EmptyState
             title="No videos found"
-            subtitle="No videos created yet"          
+            subtitle="Be the first one to upload a video"          
           />
         )}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>/*это рефреш Flatlist*/} 
         />     
     </SafeAreaView>
   )
