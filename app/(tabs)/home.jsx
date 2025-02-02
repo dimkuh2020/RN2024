@@ -6,30 +6,32 @@ import { images } from "../../constants"
 import SearchInput from '../../components/SearchInput'
 import Trending from '../../components/Trending'
 import EmptyState from '../../components/EmptyState'
-import { getAllPosts } from '../../lib/appwrite'
+import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
+import VideoCard from '../../components/VideoCard'
 
 const Home = () => {
 
- const {data: posts} = useAppwrite(getAllPosts); // вытащили все посты  
-  console.log(posts);
+ const { data: posts, refetch } = useAppwrite(getAllPosts); // вытащили все посты  data обяз
+ const { data: latestPosts } = useAppwrite(getLatestPosts);
+  //console.log(latestPosts);
 
   const [refreshing, setRefreshing] = useState(false)
   
   const onRefresh = () => {
     setRefreshing(true)
-    // если будут новые видео  2:38:00
+    // если будут новые видео 
     setRefreshing(false)
   } 
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-        data={[{id: 1}, {id: 2}, {id: 3}]}
+        data={posts}
         //data={[]}
         keyExtractor={(item) => item.$id}
         renderItem={({item}) => (
-          <Text className="text-3xl text-white">{item.id}</Text>
+         <VideoCard video={item} />
         )}
         ListHeaderComponent={() => ( //заголовок
           <View className="flex my-6 px-4 space-y-6">
@@ -57,9 +59,7 @@ const Home = () => {
                 Latest Videos
               </Text>
 
-              <Trending 
-                posts={[{id: 1}, {id: 2}, {id: 3}] ?? []} /*если не существует то пустой массив */                
-              />
+              <Trending posts={latestPosts ?? []} /*если не существует то пустой массив*/  />
               
             </View>
           </View>
