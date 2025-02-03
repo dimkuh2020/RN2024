@@ -22,25 +22,26 @@ const VideoCard = ({video: {title, thumbnail, video, creatorId: {username, avata
         </View>
       </View>
     { play ? (
-      <Text className="text-white">Playing</Text>
-    ) : (
-      <TouchableOpacity 
-        activeOpacity={0.7}
-        onPress={() => setPlay(true)}
-        className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
-      >
-        <Image 
-          source={{ uri: thumbnail }}
-          className="w-full h-full rounded-xl mt-3 border-yellow-400 border-2"
-          resizeMode="cover"
-        />
-        <Image
-            source={icons.play}
-            className="w-12 h-12 absolute"
-            resizeMode="contain"
+        <Text className="text-white">Playing</Text>
+      ) : (
+        <TouchableOpacity 
+          activeOpacity={0.7}
+          onPress={() => setPlay(true)}
+          className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
+        >
+          <Image 
+            source={{ uri: thumbnail }}
+            className="w-full h-full rounded-xl mt-3 border-yellow-400 border-2"
+            resizeMode="cover"
           />
-      </TouchableOpacity>
-    )    }
+          <Image
+              source={icons.play}
+              className="w-12 h-12 absolute"
+              resizeMode="contain"
+            />
+        </TouchableOpacity>
+      ) 
+    }
     </View>
   )
 }
