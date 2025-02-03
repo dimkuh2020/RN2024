@@ -2,6 +2,7 @@ import { View, Text, FlatList, TouchableOpacity, ImageBackground, Image } from '
 import React, { useState } from 'react'
 import * as Animatable from 'react-native-animatable'
 import { ResizeMode, Video } from "expo-av";
+// 1 import { useVideoPlayer, VideoView, createVideoPlayer } from 'expo-video';
 
 import { icons } from '../constants';
 
@@ -28,7 +29,10 @@ const TrendingItem = ({activeItem, item}) => {
                     //текущий эл.
   const [play, setPlay] = useState(false);
 
-  //console.log(activeItem.$id, item.$id)
+  // 2 const player = useVideoPlayer('https://youtu.be/4Z_sMQ7OFBE');
+    
+
+  //console.log(activeItem, item.$id)
   
   return (
     <Animatable.View
@@ -37,13 +41,20 @@ const TrendingItem = ({activeItem, item}) => {
       duration={500}
     >
       { play ? (
-          <Video
+      /* 3 <VideoView 
+            player={player}
+            className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
+            allowsFullscreen
+            allowsPictureInPicture
+            
+          />*/
+          /*<Video
             source={{uri: item.video}}
             className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
             resizeMode={ResizeMode.CONTAIN} // для ресайза
             useNativeControls // native
             shouldPlay // начать           
-          />
+          />*/
         ) : (
           <TouchableOpacity
             className="relative flex justify-center items-center"
