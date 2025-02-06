@@ -1,8 +1,8 @@
-import { View, Text, FlatList, TouchableOpacity, ImageBackground, Image } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, ImageBackground, Image, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import * as Animatable from 'react-native-animatable'
 import { ResizeMode, Video } from "expo-av";
-// 1 import { useVideoPlayer, VideoView, createVideoPlayer } from 'expo-video';
+import { useVideoPlayer, VideoView, createVideoPlayer } from 'expo-video';
 
 import { icons } from '../constants';
 
@@ -29,10 +29,17 @@ const TrendingItem = ({activeItem, item}) => {
                     //текущий эл.
   const [play, setPlay] = useState(false);
 
-  // 2 const player = useVideoPlayer('https://youtu.be/4Z_sMQ7OFBE');
+  const videoSource = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+  const player = useVideoPlayer(videoSource, (player) => {
+    player.loop = true;
+    //player.play();
+  });
+
+  console.log('player', player)
+  console.log(play)
     
 
-  //console.log(activeItem, item.$id)
+ // console.log(activeItem, item.$id)
   
   return (
     <Animatable.View
@@ -41,14 +48,15 @@ const TrendingItem = ({activeItem, item}) => {
       duration={500}
     >
       { play ? (
-      /* 3 <VideoView 
+          <VideoView 
             player={player}
-            className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
+            style={styles.video}
             allowsFullscreen
             allowsPictureInPicture
+            contentFit={'cover'}
             
-          />*/
-          /*<Video
+          />
+          /*<Video старое!!!
             source={{uri: item.video}}
             className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
             resizeMode={ResizeMode.CONTAIN} // для ресайза
@@ -106,5 +114,15 @@ const Trending = ({posts}) => {
     />
   )
 }
+
+const styles = StyleSheet.create({
+  video: {
+    width: 182,
+    height: 252,
+    borderWidth: 1,
+    borderColor: "tomato",
+    borderRadius: 33,
+  },
+})
 
 export default Trending
