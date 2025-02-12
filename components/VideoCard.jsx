@@ -1,9 +1,17 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
+import { useVideoPlayer, VideoView, createVideoPlayer } from 'expo-video';
+
 import { icons } from '../constants'
 
 const VideoCard = ({video: {title, thumbnail, video, creatorId: {username, avatar}}}) => {
   const [play, setPlay] = useState(false); // проигрывается ли видео
+
+  const videoSource = video
+    const player = useVideoPlayer(videoSource, (player) => {
+      player.loop = true;    
+      //player.play();
+    });
   
   return (
     <View className="flex flex-col items-center px-4 mb-14">
@@ -22,11 +30,20 @@ const VideoCard = ({video: {title, thumbnail, video, creatorId: {username, avata
         </View>
       </View>
     { play ? (
-        <Text className="text-white">Playing</Text>
+        <VideoView             
+          player={player}
+          style={styles.video}
+          allowsFullscreen
+          allowsPictureInPicture                        
+          contentFit={'cover'}          
+        />
       ) : (
         <TouchableOpacity 
           activeOpacity={0.7}
-          onPress={() => setPlay(true)}
+          onPress={() => {
+            setPlay(true),
+            player.play() //запуск видео
+          }}
           className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
         >
           <Image 
@@ -45,5 +62,15 @@ const VideoCard = ({video: {title, thumbnail, video, creatorId: {username, avata
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  video: {
+    width: '100%',
+    height: 230,
+    borderWidth: 1,
+    borderColor: "tomato",
+    borderRadius: 33,
+  },
+})
 
 export default VideoCard

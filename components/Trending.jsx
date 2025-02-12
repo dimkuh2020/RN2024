@@ -29,17 +29,15 @@ const TrendingItem = ({activeItem, item}) => {
                     //текущий эл.
   const [play, setPlay] = useState(false);
 
-  const videoSource = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+  const videoSource = item.video
   const player = useVideoPlayer(videoSource, (player) => {
-    player.loop = true;
+    player.loop = true;    
     //player.play();
   });
 
-  console.log('player', player)
-  console.log(play)
-    
-
- // console.log(activeItem, item.$id)
+  //console.log('videosource', videoSource)  
+  //console.log(item.$id, item.video)
+  //console.log(player.status)
   
   return (
     <Animatable.View
@@ -48,12 +46,12 @@ const TrendingItem = ({activeItem, item}) => {
       duration={500}
     >
       { play ? (
-          <VideoView 
+          <VideoView             
             player={player}
             style={styles.video}
             allowsFullscreen
-            allowsPictureInPicture
-            contentFit={'cover'}
+            allowsPictureInPicture                        
+            //contentFit={'cover'}
             
           />
           /*<Video старое!!!
@@ -67,7 +65,10 @@ const TrendingItem = ({activeItem, item}) => {
           <TouchableOpacity
             className="relative flex justify-center items-center"
             activeOpacity={0.7}
-            onPress={() => setPlay(true)}
+            onPress={() => {
+              setPlay(true),
+              player.play() //запуск видео
+            }}
           >
             <ImageBackground
               source={{ uri: item.thumbnail }}
