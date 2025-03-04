@@ -4,7 +4,7 @@ import { useVideoPlayer, VideoView, createVideoPlayer } from 'expo-video';
 
 import { icons } from '../constants'
 
-const VideoCard = ({video: {title, thumbnail, video, creatorId: {username, avatar}}}) => {
+const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
   const [play, setPlay] = useState(false); // проигрывается ли видео
 
   const videoSource = video
@@ -22,7 +22,7 @@ const VideoCard = ({video: {title, thumbnail, video, creatorId: {username, avata
           </View>
           <View className="flex justify-center flex-1 ml-3 gap-y-1">
             <Text className="font-psemibold text-sm text-white" numberOfLines={1}>{title}</Text>
-            <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>{username}</Text>
+            <Text className="text-xs text-gray-100 font-pregular" numberOfLines={1}>{creator}</Text>
           </View>
         </View>
         <View className="pt-2">
